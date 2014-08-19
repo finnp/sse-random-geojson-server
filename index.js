@@ -4,7 +4,8 @@ var http = require('http')
 var port = process.env.PORT || 8080
 http.createServer(function (req, res) {
   res.setHeader('content-type', 'text/event-stream')
-  randomgeojson()
+  var interval = parseInt(req.url.slice(1))
+  randomgeojson({interval: interval})
     .pipe(through.obj(function (feature, enc, next) {
       this.push('data:')
       this.push(JSON.stringify(feature))
